@@ -59,7 +59,7 @@ function total_distance($list_one, $list_two): int
 	return $total_distance;
 }
 
-function total_similarity_score($list_one, $list_two)
+function total_similarity_score($list_one, $list_two): int
 {
 	// keys are locations, values are frequencies
 	$frequencies = array_count_values($list_two);
