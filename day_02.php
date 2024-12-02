@@ -1,118 +1,109 @@
 <?php
-// https://adventofcode.com/2024/day/2
 
-function get_reports(): array
+require_once __DIR__ . '/AdventOfCode.php';
+
+class RedNosedReports extends AdventOfCode
 {
+	protected int $day = 2;
+	protected int $year = 2024;
+	protected string $title = 'Red-Nosed Reports';
+	protected array $reports;
 
-	$ch = curl_init();
+	protected function get_reports(): array
+	{
+		if (isset($this->reports)) {
+			return $this->reports;
+		}
 
-	$url = 'https://adventofcode.com/2024/day/2/input';
+		$puzzle_input = $this->get_puzzle_input();
 
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 80);
+		// turn puzzle input into array of strings like "8 11 13 14 15 18 17"
+		$inputs = explode(PHP_EOL, trim($puzzle_input));
 
-	// get session from developer console in browser
-	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-	'Cookie: session=' . getenv('AOC_SESSION')
-	]);
+		// split each string into array of integers
+		$this->reports = array_map(function (string $input) {
+			$array = explode(' ', $input);
+			return array_map('intval', $array);
+		}, $inputs);
 
-	$response = curl_exec($ch);
-
-	if (curl_error($ch)) {
-	echo 'Request Error:' . curl_error($ch);
-	curl_close($ch);
-	die;
+		return $this->reports;
 	}
 
-	curl_close($ch);
+	protected function is_safe(array $report): bool
+	{
+		$level_diffs = [];
 
-	// turn puzzle input into array of strings like "8 11 13 14 15 18 17"
-	$inputs = explode(PHP_EOL, trim($response));
+		// need incrementing keys for foreach loop to work
+		$report = array_values($report);
 
-	// split each string into array of integers
-	return array_map(function(string $input) {
-		$array = explode(' ', $input);
-		return array_map('intval', $array);
-	}, $inputs);
-
-}
-
-function is_safe(array $levels): bool
-{
-	$level_diffs = [];
-	foreach($levels as $key => $level) {
-		if ($key !== 0) {
-			$level_diffs[] = $level - $levels[$key - 1];
-		}
-	}
-
-	$direction = null;
-
-	foreach ($level_diffs as $level_diff) {
-		$abs_level_diff = abs($level_diff);
-
-		// diff is at least 1 and at most 3
-		if ($abs_level_diff < 1 || $abs_level_diff > 3 ) {
-			return false;
+		foreach ($report as $key => $level) {
+			if ($key !== 0) {
+				$level_diffs[] = $level - $report[$key - 1];
+			}
 		}
 
-		// levels all increasing or all decreasing
-		if ($direction === null) {
-			// set $direction to 1 or -1 based on 1st level diff
-			$direction = $level_diff / $abs_level_diff;
+		$direction = null;
+
+		// check each level diff for a problem
+		foreach ($level_diffs as $level_diff) {
+			$abs_level_diff = abs($level_diff);
+
+			// diff is at least 1 and at most 3
+			if ($abs_level_diff < 1 || $abs_level_diff > 3) {
+				return false;
+			}
+
+			// levels all increasing or all decreasing
+			if ($direction === null) {
+				// set $direction to 1 or -1 based on 1st level diff
+				$direction = $level_diff / $abs_level_diff;
+			}
+
+			// either $level_diff or $direction are neg, but not both
+			if ($level_diff * $direction < 0) {
+				return false;
+			}
 		}
 
-		// either $level_diff or $direction are neg, but not both
-		if ($level_diff * $direction < 0) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
-function is_safe_dampened(array $report): bool
-{
-	// if it's already safe, do nothing
-	if (is_safe($report)) {
 		return true;
 	}
 
-	$alt_reports = [];
-
-	foreach ($report as $key => $level)
+	protected function is_safe_dampened(array $report): bool
 	{
-		$new_report = $report;
-		unset($new_report[$key]);
-		// use array_values to reset keys
-		$alt_reports[] = array_values($new_report);
+		// if it's already safe, do nothing
+		if ($this->is_safe($report)) {
+			return true;
+		}
+
+		$alt_reports = [];
+
+		foreach ($report as $key => $level) {
+			$new_report = $report;
+			unset($new_report[$key]);
+			$alt_reports[] = $new_report;
+		}
+
+		// check if new reports are safe
+		$safe_alt_reports = array_filter($alt_reports, [$this, 'is_safe']);
+
+		// 0 = false, greater than 0 = true
+		return (bool) count($safe_alt_reports);
 	}
 
-	$safe_alt_reports = array_filter($alt_reports, 'is_safe');
+	public function solve_part_one(): void
+	{
+		$this->get_reports();
 
-	// 0 = false, > 0 = true
-	return (bool) count($safe_alt_reports);
+		$this->echo_line('Part 1: ' . count(array_filter($this->reports, [$this, 'is_safe'])));
+	}
+
+	public function solve_part_two(): void
+	{
+		$this->get_reports();
+		$this->echo_line('Part 2: ' . count(array_filter($this->reports, [$this, 'is_safe_dampened'])));
+	}
 }
 
-function total_safe_reports(array $reports, $dampened = false): int
-{
-	$callback = $dampened ? 'is_safe_dampened' : 'is_safe';
-
-	return count(array_filter($reports, $callback));
-}
-
-function red_nosed_reports(): void
-{
-	$reports = get_reports();
-
-	$total_safe_reports = total_safe_reports($reports);
-	$total_safe_reports_dampened = total_safe_reports($reports, true);
-	echo $total_safe_reports;
-	echo PHP_EOL;
-	echo $total_safe_reports_dampened;
-}
-
-red_nosed_reports();
+$puzzle = new RedNosedReports();
+$puzzle->solve_part_one();
+$puzzle->solve_part_two();
