@@ -76,10 +76,8 @@ function is_safe(array $levels): bool
 
 function is_safe_dampened(array $report): bool
 {
-	$is_safe = is_safe($report);
-
 	// if it's already safe, do nothing
-	if ($is_safe) {
+	if (is_safe($report)) {
 		return true;
 	}
 
