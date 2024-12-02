@@ -30,7 +30,7 @@ function get_reports(): array
 	curl_close($ch);
 
 	// turn puzzle input into array of strings like "8 11 13 14 15 18 17"
-	$inputs = explode("\n", trim($response));
+	$inputs = explode(PHP_EOL, trim($response));
 
 	// split each string into array of integers
 	return array_map(function(string $input) {

@@ -31,7 +31,7 @@ function get_lists(): array
 	curl_close($ch);
 
 	// turn puzzle input into array of strings like "84283   63343"
-	$pairs = explode("\n", trim($response));
+	$pairs = explode(PHP_EOL, trim($response));
 
 	// split array of strings into two arrays of integers
 	$lists = [];
