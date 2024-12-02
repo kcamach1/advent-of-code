@@ -81,7 +81,7 @@ function historian_hysteria(): void
 	$lists = get_lists();
 
 	echo total_distance(...$lists);
-	echo "\n";
+	echo PHP_EOL;
 	echo total_similarity_score(...$lists);
 }
 

@@ -111,7 +111,7 @@ function red_nosed_reports(): void
 	$total_safe_reports = total_safe_reports($reports);
 	$total_safe_reports_dampened = total_safe_reports($reports, true);
 	echo $total_safe_reports;
-	echo "\n";
+	echo PHP_EOL;
 	echo $total_safe_reports_dampened;
 }
 
