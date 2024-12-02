@@ -87,12 +87,13 @@ function is_safe_dampened(array $report): bool
 	{
 		$new_report = $report;
 		unset($new_report[$key]);
+		// use array_values to reset keys
 		$alt_reports[] = array_values($new_report);
 	}
 
 	$safe_alt_reports = array_filter($alt_reports, 'is_safe');
 
-	// 0 = false, otherwise true
+	// 0 = false, > 0 = true
 	return (bool) count($safe_alt_reports);
 }
 
