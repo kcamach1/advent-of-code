@@ -40,7 +40,7 @@ abstract class AdventOfCode
 		// get the cookie value from dev tools
 		$session = getenv('AOC_SESSION');
 		if (!$session) {
-			throw new Exception('Error: AOC_SESSION environment variable not found.');
+			throw new Exception('AOC_SESSION environment variable not found.');
 		}
 
 		// if $this->test = false and we don't already have the inputs,
