@@ -10,7 +10,8 @@ By default, the puzzle inputs are saved to the filesystem after the initial requ
 The request requires a `session` cookie from the AOC website. To configure:
 1. Log in to https://adventofcode.com/.
 2. Use the developer tools in your browser to get the value of the `session` cookie for the AoC website.
-    <img width="630" alt="Screenshot of developer tools Application tab for Chrome. Cookies section is open, showing a cookie named 'session' for domain .adventofcode.com" src="https://github.com/user-attachments/assets/7c4a8663-9bd1-4e29-96f6-d3259afa7130">
+    <img width="630" alt="Screenshot of developer tools Application tab for Chrome. Cookies section is open, showing a cookie named 'session' for domain .adventofcode.com" src="https://github.com/user-attachments/assets/55ba3ffc-4074-48cc-8fd0-1e43d8b5552f">
+
 3. Save the value of the cookie to an environment variable named `AOC_SESSION`.
    ```bash
    export AOC_SESSION=536....
