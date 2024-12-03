@@ -5,6 +5,7 @@ abstract class AdventOfCode
 	protected int $day;
 	protected int $year;
 	protected string $title;
+	public bool $test = false;
 
 	abstract public function solve_part_one(): void;
 	abstract public function solve_part_two(): void;
@@ -21,11 +22,21 @@ abstract class AdventOfCode
 	protected function get_puzzle_input(): string
 	{
 		$filepath =  __DIR__ . '/puzzle_inputs/' . $this->year;
+
+		if ($this->test) {
+			$filepath = str_replace('puzzle', 'test', $filepath);
+		}
+
 		$filename = $filepath . '/day_' . sprintf('%02d', $this->day) . '.txt';
 
 		// don't re-fetch data if it's already saved
 		if (file_exists($filename)) {
 			return file_get_contents($filename);
+		}
+
+		// $this->test = true but file doesn't exist
+		if ($this->test) {
+			throw new Exception('Missing test data. Add test data to file at ' . $filename);
 		}
 
 		// get the cookie value from dev tools
@@ -34,6 +45,8 @@ abstract class AdventOfCode
 			throw new Exception('Error: AOC_SESSION environment variable not found.');
 		}
 
+		// if $this->test = false and we don't already have the inputs,
+		// use curl to get them
 		$ch = curl_init();
 
 		$url = 'https://adventofcode.com/' . $this->year . '/day/' . $this->day . '/input';
