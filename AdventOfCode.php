@@ -11,8 +11,7 @@ abstract class AdventOfCode
 
 	public function __construct()
 	{
-		if (isset($this->title))
-		{
+		if (isset($this->title)) {
 			$this->echo_line($this->title);
 		}
 	}
@@ -20,7 +19,7 @@ abstract class AdventOfCode
 	// get puzzle input from file or with curl if file doesn't exist
 	protected function get_puzzle_input(): string
 	{
-		$filepath =  __DIR__ . '/puzzle_inputs/' . $this->year;
+		$filepath =  __DIR__ . '/' . $this->year . '/puzzle_inputs';
 
 		if ($this->test) {
 			$filepath = str_replace('puzzle', 'test', $filepath);
@@ -71,10 +70,11 @@ abstract class AdventOfCode
 
 		curl_close($ch);
 
-		// save data to file to limit unnecessary requests
+		// make sure directory for file exists
 		if (!is_dir($filepath)) {
 			mkdir($filepath, 0777, true);
 		}
+		// save data to file to limit unnecessary requests
 		file_put_contents($filename, $response);
 
 		return $response;
