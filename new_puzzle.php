@@ -38,7 +38,7 @@ if ($day === null) {
 	echo 'Missing option -d or --day. Value should be between 1 and 25.';
 	die;
 }
-$day_int = intval($day);
+$day_int = (int) $day;
 if ($day_int < 1 ||  $day_int > 25) {
 	echo "Invalid day value $day. Value should be between 1 and 25.";
 	die;
@@ -49,8 +49,8 @@ if ($year === null) {
 	echo "Missing option -y or --year. Value should be between 2015 and $current_year.";
 	die;
 }
-$year_int = intval($year);
-if ($year_int < 2015 || $year_int > intval($current_year)) {
+$year_int = (int) $year;
+if ($year_int < 2015 || $year_int > (int) $current_year) {
 	echo "Invalid year value $year. Value should be between 2015 and $current_year";
 	die;
 }
