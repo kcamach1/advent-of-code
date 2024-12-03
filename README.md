@@ -30,7 +30,7 @@ Historian Hysteria
 Part 1: 11
 ```
 
-Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the first `<code>` block on the puzzle page. The `AOC_SESSION` environment variable is not necessary for this request.
+Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the largest `<code>` block on the puzzle page. The `AOC_SESSION` environment variable is not necessary for this request.
 
 Alternately, you can manually create the files in `path/to/repo/<year>/test_inputs` and fill with the appropriate data. Filenames should look like `day_01.txt`. 
 
