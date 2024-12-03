@@ -1,0 +1,25 @@
+<?php
+
+require_once dirname(__DIR__) . '/AdventOfCode.php';
+
+class <class_name> extends AdventOfCode
+{
+	protected int $day = <day>;
+	protected int $year = <year>;
+	protected string $title = "<title>";
+
+	public function solve_part_one(): void
+	{
+		$this->echo_line( 'Part 1: TODO');
+	}
+
+//	public function solve_part_two(): void
+//	{
+//		$this->echo_line( 'Part 2: TODO');
+//	}
+}
+
+$puzzle = new <class_name>();
+// $puzzle->test = true;
+$puzzle->solve_part_one();
+// $puzzle->solve_part_two();

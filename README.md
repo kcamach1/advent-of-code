@@ -1,7 +1,7 @@
 # Advent of Code
 Solutions to puzzles from https://adventofcode.com/.
 
-## System requirements
+## System Requirements
 I am running this code with PHP 8.3 on a Mac. YMMV with other setups.
 
 ## Getting Puzzle Inputs
@@ -33,3 +33,10 @@ Part 1: 11
 Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the first `<code>` block on the puzzle page. The `AOC_SESSION` environment variable is not necessary for this request.
 
 Alternately, you can manually create the files in `path/to/repo/<year>/test_inputs` and fill with the appropriate data. Filenames should look like `day_01.txt`. 
+
+## Add a Puzzle
+Use the `new_puzzle.php` script to generate new puzzle files.
+```bash
+# example
+php new_puzzle.php --year=2024 --day=1 --title="Historian Hysteria"
+```
