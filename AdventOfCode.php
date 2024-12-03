@@ -16,15 +16,11 @@ abstract class AdventOfCode
 		}
 	}
 
-	// get puzzle input from file or with curl if file doesn't exist
-	protected function get_puzzle_input(): string
+	// get input from file or website
+	protected function get_input(): string
 	{
-		$filepath =  __DIR__ . '/' . $this->year . '/puzzle_inputs';
-
-		if ($this->test) {
-			$filepath = str_replace('puzzle', 'test', $filepath);
-		}
-
+		$type = $this->test ? 'test' : 'puzzle';
+		$filepath =  __DIR__ . '/' . $this->year . '/' . $type . '_inputs';
 		$filename = $filepath . '/day_' . sprintf('%02d', $this->day) . '.txt';
 
 		// don't re-fetch data if it's already saved
@@ -32,28 +28,33 @@ abstract class AdventOfCode
 			return file_get_contents($filename);
 		}
 
+		// if file doesn't exist, get data from website
+		$input = $this->test ? $this->get_test_input() : $this->get_puzzle_input();
+
 		// make sure directory for file exists
 		if (!is_dir($filepath)) {
 			mkdir($filepath, 0777, true);
 		}
 
-		// if $this->test = true but file doesn't exist,
-		// get example inputs from website
+		// write data to file to avoid unnecessary re-requests
+		file_put_contents($filename, $input);
+
+		return $input;
+	}
+
+	// get puzzle input with curl
+	protected function get_puzzle_input(): string
+	{
 		if ($this->test) {
-			// don't need session for example inputs
-			$html_string = file_get_contents('https://adventofcode.com/' . $this->year . '/day/' . $this->day);
-			$dom = new DOMDocument();
-			// suppress warnings about invalid tags
-			@$dom->loadHTML($html_string);
+			return $this->get_test_input();
+		}
 
-			// text content of first <code> element on page
-			$example_input = $dom->getElementsByTagName('code')
-				->item(0)
-				->textContent;
+		$filepath =  __DIR__ . '/' . $this->year . '/puzzle_inputs';
+		$filename = $filepath . '/day_' . sprintf('%02d', $this->day) . '.txt';
 
-			// save data to file to limit unnecessary requests
-			file_put_contents($filename, $example_input);
-			return $example_input;
+		// don't re-fetch data if it's already saved
+		if (file_exists($filename)) {
+			return file_get_contents($filename);
 		}
 
 		// get puzzle input from website
@@ -88,10 +89,22 @@ abstract class AdventOfCode
 
 		curl_close($ch);
 
-		// save data to file to limit unnecessary requests
-		file_put_contents($filename, $response);
-
 		return $response;
+	}
+
+	// get test input from website
+	protected function get_test_input(): string
+	{
+		// get example inputs from website
+		$html_string = file_get_contents('https://adventofcode.com/' . $this->year . '/day/' . $this->day);
+		$dom = new DOMDocument();
+		// suppress warnings about invalid tags
+		@$dom->loadHTML($html_string);
+
+		// text content of first <code> element on page
+		return $dom->getElementsByTagName('code')
+			->item(0)
+			->textContent;
 	}
 
 	// literally just adds PHP_EOL after echo

@@ -15,7 +15,7 @@ class HistorianHysteria extends AdventOfCode
 			return $this->lists;
 		}
 
-		$puzzle_input = $this->get_puzzle_input();
+		$puzzle_input = $this->get_input();
 
 		// turn puzzle input into array of strings like "84283   63343"
 		$pairs = explode(PHP_EOL, trim($puzzle_input));

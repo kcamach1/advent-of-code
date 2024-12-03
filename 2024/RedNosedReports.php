@@ -15,7 +15,7 @@ class RedNosedReports extends AdventOfCode
 			return $this->reports;
 		}
 
-		$puzzle_input = $this->get_puzzle_input();
+		$puzzle_input = $this->get_input();
 
 		// turn puzzle input into array of strings like "8 11 13 14 15 18 17"
 		$inputs = explode(PHP_EOL, trim($puzzle_input));
