@@ -32,19 +32,37 @@ abstract class AdventOfCode
 			return file_get_contents($filename);
 		}
 
-		// $this->test = true but file doesn't exist
-		if ($this->test) {
-			throw new Exception('Missing test data. Add test data to file at ' . $filename);
+		// make sure directory for file exists
+		if (!is_dir($filepath)) {
+			mkdir($filepath, 0777, true);
 		}
 
-		// get the cookie value from dev tools
+		// if $this->test = true but file doesn't exist,
+		// get example inputs from website
+		if ($this->test) {
+			// don't need session for example inputs
+			$html_string = file_get_contents('https://adventofcode.com/' . $this->year . '/day/' . $this->day);
+			$dom = new DOMDocument();
+			// suppress warnings about invalid tags
+			@$dom->loadHTML($html_string);
+
+			// text content of first <code> element on page
+			$example_input = $dom->getElementsByTagName('code')
+				->item(0)
+				->textContent;
+
+			// save data to file to limit unnecessary requests
+			file_put_contents($filename, $example_input);
+			return $example_input;
+		}
+
+		// get puzzle input from website
+		// using session cookie with curl
 		$session = getenv('AOC_SESSION');
 		if (!$session) {
 			throw new Exception('AOC_SESSION environment variable not found.');
 		}
 
-		// if $this->test = false and we don't already have the inputs,
-		// use curl to get them
 		$ch = curl_init();
 
 		$url = 'https://adventofcode.com/' . $this->year . '/day/' . $this->day . '/input';
@@ -70,10 +88,6 @@ abstract class AdventOfCode
 
 		curl_close($ch);
 
-		// make sure directory for file exists
-		if (!is_dir($filepath)) {
-			mkdir($filepath, 0777, true);
-		}
 		// save data to file to limit unnecessary requests
 		file_put_contents($filename, $response);
 
