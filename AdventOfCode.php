@@ -8,7 +8,6 @@ abstract class AdventOfCode
 	public bool $test = false;
 
 	abstract public function solve_part_one(): void;
-	abstract public function solve_part_two(): void;
 
 	public function __construct()
 	{
