@@ -7,7 +7,7 @@ abstract class AdventOfCode
 	protected string $title;
 	public bool $test = false;
 
-	abstract public function solve_part_one(): void;
+	abstract protected function solve_part_one(): string;
 
 	public function __construct()
 	{
@@ -114,6 +114,16 @@ abstract class AdventOfCode
 
 		// text content from longest <code>
 		return $code_contents[0];
+	}
+
+	// runs solve_part_one() and, if it exists, solve_part_two()
+	public function solve(): void
+	{
+		$this->echo_line('Part 1: ' . $this->solve_part_one());
+
+		if (method_exists($this, 'solve_part_two')) {
+			$this->echo_line('Part 2: ' . $this->solve_part_two());
+		}
 	}
 
 	// literally just adds PHP_EOL after echo

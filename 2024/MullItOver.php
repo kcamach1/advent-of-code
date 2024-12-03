@@ -56,21 +56,18 @@ class MullItOver extends AdventOfCode
 		return $pair[0] * $pair[1];
 	}
 
-	public function solve_part_one(): void
+	protected function solve_part_one(): string
 	{
 		$pairs = $this->get_mul_pairs();
-
-		$this->echo_line('Part 1: ' . array_sum(array_map([$this, 'multiply_pair'], $pairs)));
+		return (string) array_sum(array_map([$this, 'multiply_pair'], $pairs));
 	}
 
-	public function solve_part_two(): void
+	protected function solve_part_two(): string
 	{
 		$pairs = $this->get_enabled_mul_pairs();
-
-		$this->echo_line('Part 2: ' . array_sum(array_map([$this, 'multiply_pair'], $pairs)));
+		return (string) array_sum(array_map([$this, 'multiply_pair'], $pairs));
 	}
 }
 
 $puzzle = new MullItOver();
-$puzzle->solve_part_one();
-$puzzle->solve_part_two();
+$puzzle->solve();

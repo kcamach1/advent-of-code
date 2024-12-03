@@ -61,19 +61,18 @@ class HistorianHysteria extends AdventOfCode
 		return $total_similarity_score;
 	}
 
-	public function solve_part_one(): void
+	protected function solve_part_one(): string
 	{
 		$this->get_lists();
-		$this->echo_line( 'Part 1: ' . $this->total_distance(...$this->lists));
+		return (string) $this->total_distance(...$this->lists);
 	}
 
-	public function solve_part_two(): void
+	protected function solve_part_two(): string
 	{
 		$this->get_lists();
-		$this->echo_line('Part 2: ' . $this->total_similarity_score(...$this->lists));
+		return (string) $this->total_similarity_score(...$this->lists);
 	}
 }
 
 $puzzle = new HistorianHysteria();
-$puzzle->solve_part_one();
-$puzzle->solve_part_two();
+$puzzle->solve();

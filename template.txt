@@ -8,18 +8,17 @@ class <class_name> extends AdventOfCode
 	protected int $year = <year>;
 	protected string $title = "<title>";
 
-	public function solve_part_one(): void
+	protected function solve_part_one(): string
 	{
-		$this->echo_line( 'Part 1: TODO');
+	    return 'TODO';
 	}
 
-//	public function solve_part_two(): void
+//	protected function solve_part_two(): string
 //	{
-//		$this->echo_line( 'Part 2: TODO');
+//		return 'TODO';
 //	}
 }
 
 $puzzle = new <class_name>();
 // $puzzle->test = true;
-$puzzle->solve_part_one();
-// $puzzle->solve_part_two();
+$puzzle->solve();

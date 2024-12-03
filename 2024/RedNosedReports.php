@@ -90,19 +90,18 @@ class RedNosedReports extends AdventOfCode
 		return (bool) count($safe_alt_reports);
 	}
 
-	public function solve_part_one(): void
+	protected function solve_part_one(): string
 	{
 		$this->get_reports();
-		$this->echo_line('Part 1: ' . count(array_filter($this->reports, [$this, 'is_safe'])));
+		return (string) count(array_filter($this->reports, [$this, 'is_safe']));
 	}
 
-	public function solve_part_two(): void
+	protected function solve_part_two(): string
 	{
 		$this->get_reports();
-		$this->echo_line('Part 2: ' . count(array_filter($this->reports, [$this, 'is_safe_dampened'])));
+		return (string) count(array_filter($this->reports, [$this, 'is_safe_dampened']));
 	}
 }
 
 $puzzle = new RedNosedReports();
-$puzzle->solve_part_one();
-$puzzle->solve_part_two();
+$puzzle->solve();
