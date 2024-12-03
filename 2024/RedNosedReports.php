@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/AdventOfCode.php';
+require_once dirname(__DIR__) . '/AdventOfCode.php';
 
 class RedNosedReports extends AdventOfCode
 {
@@ -93,7 +93,6 @@ class RedNosedReports extends AdventOfCode
 	public function solve_part_one(): void
 	{
 		$this->get_reports();
-
 		$this->echo_line('Part 1: ' . count(array_filter($this->reports, [$this, 'is_safe'])));
 	}
 

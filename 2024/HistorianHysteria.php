@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/AdventOfCode.php';
+require_once dirname(__DIR__) . '/AdventOfCode.php';
 
 class HistorianHysteria extends AdventOfCode
 {
@@ -75,6 +75,5 @@ class HistorianHysteria extends AdventOfCode
 }
 
 $puzzle = new HistorianHysteria();
-
 $puzzle->solve_part_one();
 $puzzle->solve_part_two();
