@@ -21,14 +21,15 @@ If you don't want to set an `AOC_SESSION` environment variable, you can manually
 ## Test Mode
 Set the `$test` property on an `AdventOfCode` subclass to `true` to test your solution against the example inputs from the AoC website.
 ```php
-$puzzle = new HistorianHysteria(); // day 1 2024
+$puzzle = new HistorianHysteria();
 $puzzle->test = true;
-$puzzle->solve_part_one();
+$puzzle->solve();
 ```
 ```bash
 # output
-Historian Hysteria
+Historian Hysteria (test)
 Part 1: 11
+Part 2: 31
 ```
 
 Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the largest `<code>` block on the puzzle page. The `AOC_SESSION` environment variable is not necessary for this request.
