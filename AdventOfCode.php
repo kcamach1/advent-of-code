@@ -101,10 +101,19 @@ abstract class AdventOfCode
 		// suppress warnings about invalid tags
 		@$dom->loadHTML($html_string);
 
-		// text content of first <code> element on page
-		return $dom->getElementsByTagName('code')
-			->item(0)
-			->textContent;
+		// assume the example input is the longest <code> block on the page
+		$code_nodes = $dom->getElementsByTagName('code');
+		$code_contents = [];
+		foreach ($code_nodes as $node) {
+			$code_contents[] = $node->textContent;
+		}
+
+		usort($code_contents, function ($a, $b) {
+			return strlen($b)-strlen($a);
+		});
+
+		// text content from longest <code>
+		return $code_contents[0];
 	}
 
 	// literally just adds PHP_EOL after echo
