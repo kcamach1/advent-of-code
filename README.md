@@ -1,14 +1,14 @@
 # Advent of Code
-Solutions to puzzles from https://adventofcode.com/.
+Solutions to puzzles from https://adventofcode.com.
 
 ## System Requirements
 I am running this code with PHP 8.3 on a Mac. YMMV with other setups.
 
 ## Getting Puzzle Inputs
-By default, the puzzle inputs are saved to the filesystem after the initial request to the AoC site. This is done to be kind to Eric Wastl's servers and not re-request data that isn't going to change. 
+By default, the puzzle inputs are saved to the filesystem after the initial request to the AoC site.
 
 The request requires a `session` cookie from the AOC website. To configure:
-1. Log in to https://adventofcode.com/.
+1. Log in to https://adventofcode.com.
 2. Use the developer tools in your browser to get the value of the `session` cookie for the AoC website.
     <img width="630" alt="Screenshot of developer tools Application tab for Chrome. Cookies section is open, showing a cookie named 'session' for domain .adventofcode.com" src="https://github.com/user-attachments/assets/55ba3ffc-4074-48cc-8fd0-1e43d8b5552f">
 
@@ -32,13 +32,12 @@ Part 1: 11
 Part 2: 31
 ```
 
-Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the largest `<code>` block on the puzzle page. The `AOC_SESSION` environment variable is not necessary for this request.
+Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the largest `<code>` block on the puzzle page. This request does not use the `AOC_SESSION` environment variable.
 
 Alternately, you can manually create the files in `path/to/repo/<year>/test_inputs` and fill with the appropriate data. Filenames should look like `day_01.txt`. 
 
 ## Add a Puzzle
 Use the `new_puzzle.php` script to generate new puzzle files.
 ```bash
-# example
 php new_puzzle.php --year=2024 --day=1 --title="Historian Hysteria"
 ```
