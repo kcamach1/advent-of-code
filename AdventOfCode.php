@@ -9,13 +9,6 @@ abstract class AdventOfCode
 
 	abstract protected function solve_part_one(): string;
 
-	public function __construct()
-	{
-		if (isset($this->title)) {
-			$this->echo_line($this->title);
-		}
-	}
-
 	// get input from file or website
 	protected function get_input(): string
 	{
@@ -119,18 +112,20 @@ abstract class AdventOfCode
 	// runs solve_part_one() and, if it exists, solve_part_two()
 	public function solve(): void
 	{
-		$this->echo_line('Part 1: ' . $this->solve_part_one());
+		echo $this->title;
+
+		if ($this->test) {
+			echo ' (test)';
+		}
+
+		echo PHP_EOL;
+
+		echo 'Part 1: ' . $this->solve_part_one();
 
 		if (method_exists($this, 'solve_part_two')) {
-			$this->echo_line('Part 2: ' . $this->solve_part_two());
+			echo PHP_EOL;
+			echo 'Part 2: ' . $this->solve_part_two();
 		}
-	}
-
-	// literally just adds PHP_EOL after echo
-	protected function echo_line(string $output): void
-	{
-		echo $output;
-		echo PHP_EOL;
 	}
 
 }
