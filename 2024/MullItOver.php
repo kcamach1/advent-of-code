@@ -27,7 +27,7 @@ class MullItOver extends AdventOfCode
 
 	}
 
-	protected function get_do_mul_pairs(): array
+	protected function get_enabled_mul_pairs(): array
 	{
 		// explicitly flag enabled at start and disabled at end to make regex easier
 		$input = 'do()' . $this->get_input() . 'don\'t()';
@@ -65,7 +65,7 @@ class MullItOver extends AdventOfCode
 
 	public function solve_part_two(): void
 	{
-		$pairs = $this->get_do_mul_pairs();
+		$pairs = $this->get_enabled_mul_pairs();
 
 		$this->echo_line('Part 2: ' . array_sum(array_map([$this, 'multiply_pair'], $pairs)));
 	}
