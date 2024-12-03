@@ -31,34 +31,32 @@ class HistorianHysteria extends AdventOfCode
 		return $this->lists;
 	}
 
-	protected function total_distance($list_one, $list_two): int
+	protected function total_distance(array $list_one, array $list_two): int
 	{
 		sort($list_one, SORT_NUMERIC);
 		sort($list_two, SORT_NUMERIC);
 
-		$total_distance = 0;
-
-		array_map(function(int $location_one, int $location_two) use (&$total_distance) {
-			$total_distance += abs($location_one - $location_two);
-		}, $list_one, $list_two);
-
-		return $total_distance;
+		return array_sum(array_map([$this, 'distance'], $list_one, $list_two));
 	}
 
-	protected function total_similarity_score($list_one, $list_two): int
+	protected function distance(int $location_one, int $location_two): int
+	{
+		return abs($location_one - $location_two);
+	}
+
+	protected function total_similarity_score(array $list_one, array $list_two): int
 	{
 		// keys are location IDs, values are frequencies
 		$frequencies = array_count_values($list_two);
 
-		$total_similarity_score = 0;
-
-		array_map(function(int $location) use ($frequencies, &$total_similarity_score) {
+		$similarity_scores = array_map(function(int $location) use ($frequencies) {
 			if (array_key_exists($location, $frequencies)) {
-				$total_similarity_score += ($location * $frequencies[$location]);
+				return ($location * $frequencies[$location]);
 			}
+			return 0;
 		}, $list_one);
 
-		return $total_similarity_score;
+		return array_sum($similarity_scores);
 	}
 
 	protected function solve_part_one(): string
