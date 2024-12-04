@@ -38,20 +38,7 @@ abstract class AdventOfCode
 	// get puzzle input with curl
 	protected function get_puzzle_input(): string
 	{
-		if ($this->test) {
-			return $this->get_test_input();
-		}
-
-		$filepath =  __DIR__ . '/' . $this->year . '/puzzle_inputs';
-		$filename = $filepath . '/day_' . sprintf('%02d', $this->day) . '.txt';
-
-		// don't re-fetch data if it's already saved
-		if (file_exists($filename)) {
-			return file_get_contents($filename);
-		}
-
-		// get puzzle input from website
-		// using session cookie with curl
+		// session required for puzzle inputs
 		$session = getenv('AOC_SESSION');
 		if (!$session) {
 			throw new Exception('AOC_SESSION environment variable not found.');
