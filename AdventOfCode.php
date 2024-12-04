@@ -116,6 +116,13 @@ abstract class AdventOfCode
 		return $this->day;
 	}
 
+	// need getter because year is protected
+	// to prevent it from being changed
+	public function get_year(): int
+	{
+		return $this->year;
+	}
+
 	// runs solve_part_one() and, if it exists, solve_part_two()
 	public function solve(): void
 	{

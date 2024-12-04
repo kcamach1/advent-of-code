@@ -65,6 +65,33 @@ if (is_numeric($title[0])) {
 	die;
 }
 
+$filepath =  __DIR__ . '/' . $year;
+
+require_once __DIR__ . '/AdventOfCode.php';
+// load php files from year folder
+// need to check that class for year/day doesn't already exist
+foreach (glob($filepath . '/*.php') as $file) {
+	include $file;
+}
+
+// get subclasses of AdventOfCode
+$class_names = array_filter(get_declared_classes(), function (string $class) {
+	return is_subclass_of($class, 'AdventOfCode');
+});
+
+// get $day for each class
+$days = array_map(function(string $class) {
+	return (new $class())->get_day();
+}, $class_names);
+
+$key = array_search($day_int, $days);
+// stop if class with year/day combo already exists
+if ($key) {
+	$existing_class_name = $class_names[$key];
+	echo "Class $existing_class_name already exists for Advent of Code $year Day $day";
+	die;
+}
+
 // remove non-alphanumeric characters from title to get class name
 $class_name = preg_replace('/[^a-zA-Z0-9]/', '', $title);
 
@@ -75,7 +102,7 @@ $template = str_replace('<year>', $year, $template);
 $template = str_replace('<title>', $title, $template);
 $template = str_replace('<class_name>', $class_name, $template);
 
-$filepath =  __DIR__ . '/' . $year;
+$filename = $filepath . '/' . $class_name . '.php';
 
 // make sure directory for file exists
 if (!is_dir($filepath)) {
@@ -83,4 +110,6 @@ if (!is_dir($filepath)) {
 }
 
 // create puzzle class file
-file_put_contents($filepath . '/' . $class_name . '.php', $template);
+file_put_contents($filename, $template);
+
+echo 'New puzzle file created at ' . str_replace(__DIR__ . '/', '', $filename);

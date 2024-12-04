@@ -69,29 +69,54 @@ foreach (glob(__DIR__ . '/' . $year . '/*.php') as $file) {
 }
 
 // get subclasses of AdventOfCode
-$classes = array_filter(get_declared_classes(), function (string $class) {
+$class_names = array_filter(get_declared_classes(), function (string $class) {
 	return is_subclass_of($class, 'AdventOfCode');
 });
 
 // turn strings into classes
 $classes = array_map(function(string $class) {
 	return (new $class());
-}, $classes);
+}, $class_names);
 
 $days = array_map(function (AdventOfCode $class) {
 	return $class->get_day();
 }, $classes);
 
-// int $day => AdventOfCode $class
-$classes = array_combine($days, $classes);
+$day_keys = array_keys($days, $day_int);
 
-if (!array_key_exists($day_int, $classes)) {
-	echo "No puzzle found for Advent of Code $year day $day.";
+// no class for day/year combo
+if (count($day_keys) === 0) {
+	echo "No puzzle found for Advent of Code $year Day $day.";
 	die;
 }
 
+// two classes with same day/year
+if (count($day_keys) > 1) {
+	echo "Multiple classes found for Advent of Code $year Day $day. Remove one and try again.";
+	foreach ($day_keys as $key) {
+		echo PHP_EOL;
+		echo $class_names[$key];
+	}
+	die;
+}
+
+// key to get correct values from $days, $classes, and $class_names
+$key = array_shift($day_keys);
+
 // get object with appropriate $day value
-$puzzle = $classes[$day_int];
+$puzzle = $classes[$key];
+
+// handle if $year property doesn't match folder where the class lives.
+// ex: class is in 2024 folder but has $year = 2023
+$actual_year = $puzzle->get_year();
+if ($actual_year !== $year_int) {
+	$class_name = $class_names[$key];
+	echo "$class_name has \$year = $actual_year. Doesn't match location in $year folder.";
+	echo PHP_EOL;
+	echo "Either move this class to the $actual_year folder or set \$year = $year.";
+	die;
+}
+
 if ($test) {
 	$puzzle->test = true;
 }
