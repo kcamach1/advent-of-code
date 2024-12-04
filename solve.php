@@ -92,7 +92,7 @@ if (count($day_keys) === 0) {
 
 // two classes with same day/year
 if (count($day_keys) > 1) {
-	echo "Multiple classes found in $year directory with \$day = $day. Remove one and try again.";
+	echo "Multiple classes found in $year directory with \$day = $day. Remove all but one and try again.";
 	foreach ($day_keys as $key) {
 		echo PHP_EOL;
 		echo $class_names[$key];
