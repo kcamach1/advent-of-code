@@ -43,10 +43,10 @@ Part 2: 31
 ```
 Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the largest `<code>` block on the puzzle page. This request does not use the `AOC_SESSION` environment variable.
 
-Alternately, you can manually create the files in `path/to/repo/<year>/test_inputs` and fill with the appropriate data. Filenames should look like `day_01.txt`. 
+Alternately, you can manually create the files in `path/to/repo/<year>/test_inputs` and fill them with the appropriate data. Filenames should look like `day_01.txt`. 
 
 ## Community Compliance
-This repo follows the automation guidelines on the /r/adventofcode [community wiki](https://www.reddit.com/r/adventofcode/wiki/faqs/automation] somewhere). 
+This repo follows the automation guidelines on the /r/adventofcode [community wiki](https://www.reddit.com/r/adventofcode/wiki/faqs/automation). 
 - [x] Outbound calls are throttled to one every 5 minutes 
     - `aoc_request()` in `AdventOfCode`
 - [x] Once inputs are downloaded, they are cached locally
