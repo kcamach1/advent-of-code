@@ -79,17 +79,12 @@ $class_names = array_filter(get_declared_classes(), function (string $class) {
 	return is_subclass_of($class, 'AdventOfCode');
 });
 
-// get $day for each class
-$days = array_map(function(string $class) {
-	return (new $class())->get_day();
-}, $class_names);
-
-$key = array_search($day_int, $days);
 // stop if class with year/day combo already exists
-if ($key) {
-	$existing_class_name = $class_names[$key];
-	echo "Class $existing_class_name already exists for Advent of Code $year Day $day";
-	die;
+foreach ($class_names as $class_name) {
+	if ((new $class_name())->get_day() === $day_int) {
+		echo "Class $class_name with \$day = $day already exists in $year directory";
+		die;
+	}
 }
 
 // remove non-alphanumeric characters from title to get class name
