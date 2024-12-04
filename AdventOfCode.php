@@ -57,39 +57,16 @@ abstract class AdventOfCode
 			throw new Exception('AOC_SESSION environment variable not found.');
 		}
 
-		$ch = curl_init();
-
 		$url = 'https://adventofcode.com/' . $this->year . '/day/' . $this->day . '/input';
 
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 80);
-
-		// get session from developer console in browser
-		curl_setopt($ch, CURLOPT_HTTPHEADER, [
-			'Cookie: session=' . $session
-		]);
-
-		$response = curl_exec($ch);
-
-		if (curl_error($ch)) {
-			echo 'Request Error:' . curl_error($ch);
-			curl_close($ch);
-			die;
-		}
-
-		curl_close($ch);
-
-		return $response;
+		return $this->aoc_request($url, $session);
 	}
 
 	// get test input from website
 	protected function get_test_input(): string
 	{
 		// get example inputs from website
-		$html_string = file_get_contents('https://adventofcode.com/' . $this->year . '/day/' . $this->day);
+		$html_string = $this->aoc_request('https://adventofcode.com/' . $this->year . '/day/' . $this->day);
 		$dom = new DOMDocument();
 		// suppress warnings about invalid tags
 		@$dom->loadHTML($html_string);
@@ -107,6 +84,58 @@ abstract class AdventOfCode
 
 		// text content from longest <code>
 		return $code_contents[0];
+	}
+
+	protected function aoc_request(string $url, ?string $session = null): string
+	{
+		$timestamp_filename = __DIR__ . '/timestamp.txt';
+		$last_request_time = 0;
+		$now = time();
+		if (file_exists($timestamp_filename)) {
+			$last_request_time = (int) file_get_contents($timestamp_filename);
+		}
+		$elapsed = $now - $last_request_time;
+
+		// Wait at least 5 minutes between requests. This
+		// is required by AoC guidelines. Do not remove
+		// timestamp.txt to bypass the throttle.
+		if ($elapsed < 300) {
+			echo 'Could not complete request to ' . $url;
+			echo PHP_EOL;
+			echo 'Please wait ' . (300 - $elapsed) . ' seconds before sending another request to adventofcode.com';
+			die;
+		}
+
+		file_put_contents($timestamp_filename, $now);
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 80);
+
+		// required by r/adventofcode automation faqs
+		curl_setopt($ch, CURLOPT_USERAGENT, 'github.com/kcamach1/advent-of-code by contact@kcamach1.dev');
+
+		if ($session) {
+			curl_setopt($ch, CURLOPT_HTTPHEADER, [
+				'Cookie: session=' . $session
+			]);
+		}
+
+		$response = curl_exec($ch);
+
+		if (curl_error($ch)) {
+			echo 'Request Error:' . curl_error($ch);
+			curl_close($ch);
+			die;
+		}
+
+		curl_close($ch);
+
+		return $response;
 	}
 
 	// need getter because day is protected

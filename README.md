@@ -45,3 +45,11 @@ Like the puzzle inputs, test inputs are saved to the filesystem after the initia
 
 Alternately, you can manually create the files in `path/to/repo/<year>/test_inputs` and fill with the appropriate data. Filenames should look like `day_01.txt`. 
 
+## Community Compliance
+This repo follows the automation guidelines on the /r/adventofcode [community wiki](https://www.reddit.com/r/adventofcode/wiki/faqs/automation] somewhere). 
+- [x] Outbound calls are throttled to one every 5 minutes 
+    - `aoc_request()` in `AdventOfCode`
+- [x] Once inputs are downloaded, they are cached locally
+    - `get_input()` in `AdventOfCode`
+- [x] The User-Agent header includes the url of this GitHub repo and my email address
+    - `aoc_request()` in `AdventOfCode`
