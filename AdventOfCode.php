@@ -103,7 +103,7 @@ abstract class AdventOfCode
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 80);
 
-		// required by r/adventofcode automation faqs
+		// required by AoC guidelines
 		curl_setopt($ch, CURLOPT_USERAGENT, 'github.com/kcamach1/advent-of-code by contact@kcamach1.dev');
 
 		if ($session) {
