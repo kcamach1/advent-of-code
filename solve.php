@@ -86,13 +86,13 @@ $day_keys = array_keys($days, $day_int);
 
 // no class for day/year combo
 if (count($day_keys) === 0) {
-	echo "No puzzle found for Advent of Code $year Day $day.";
+	echo "No puzzle found with \$day = $day in $year directory.";
 	die;
 }
 
 // two classes with same day/year
 if (count($day_keys) > 1) {
-	echo "Multiple classes found for Advent of Code $year Day $day. Remove one and try again.";
+	echo "Multiple classes found in $year directory with \$day = $day. Remove one and try again.";
 	foreach ($day_keys as $key) {
 		echo PHP_EOL;
 		echo $class_names[$key];
@@ -111,9 +111,9 @@ $puzzle = $classes[$key];
 $actual_year = $puzzle->get_year();
 if ($actual_year !== $year_int) {
 	$class_name = $class_names[$key];
-	echo "$class_name has \$year = $actual_year. Doesn't match location in $year folder.";
+	echo "$class_name in $year folder has \$year = $actual_year.";
 	echo PHP_EOL;
-	echo "Either move this class to the $actual_year folder or set \$year = $year.";
+	echo "Either move this class to the $actual_year directory or update to set \$year = $year.";
 	die;
 }
 
