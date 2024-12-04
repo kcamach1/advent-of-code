@@ -35,7 +35,6 @@ abstract class AdventOfCode
 		return $input;
 	}
 
-	// get puzzle input with curl
 	protected function get_puzzle_input(): string
 	{
 		// session required for puzzle inputs
@@ -49,10 +48,9 @@ abstract class AdventOfCode
 		return $this->aoc_request($url, $session);
 	}
 
-	// get test input from website
 	protected function get_test_input(): string
 	{
-		// get example inputs from website
+		// get html of puzzle page
 		$html_string = $this->aoc_request('https://adventofcode.com/' . $this->year . '/day/' . $this->day);
 		$dom = new DOMDocument();
 		// suppress warnings about invalid tags
@@ -73,6 +71,8 @@ abstract class AdventOfCode
 		return $code_contents[0];
 	}
 
+	// curl request to adventofcode.com
+	// configured to follow AoC automation guidelines
 	protected function aoc_request(string $url, ?string $session = null): string
 	{
 		$timestamp_filename = __DIR__ . '/timestamp.txt';
