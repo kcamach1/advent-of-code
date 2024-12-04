@@ -2,6 +2,9 @@
 
 require_once dirname(__DIR__) . '/AdventOfCode.php';
 
+// note: inputs for part 1 and part 2 are different.
+// if you get to part 2, you'll need to update
+// 2024/test_inputs/day_03.txt manually.
 class MullItOver extends AdventOfCode
 {
 	protected int $day = 3;
@@ -68,6 +71,3 @@ class MullItOver extends AdventOfCode
 		return (string) array_sum(array_map([$this, 'multiply_pair'], $pairs));
 	}
 }
-
-$puzzle = new MullItOver();
-$puzzle->solve();

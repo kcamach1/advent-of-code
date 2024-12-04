@@ -18,7 +18,3 @@ class <class_name> extends AdventOfCode
 //		return 'TODO';
 //	}
 }
-
-$puzzle = new <class_name>();
-// $puzzle->test = true;
-$puzzle->solve();

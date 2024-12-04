@@ -18,12 +18,22 @@ The request requires a `session` cookie from the AOC website. To configure:
    ```
 If you don't want to set an `AOC_SESSION` environment variable, you can manually create the files in `path/to/repo/<year>/puzzle_inputs`. Filenames should look like `day_01.txt`. 
 
-## Test Mode
-Set the `$test` property on an `AdventOfCode` subclass to `true` to test your solution against the example inputs from the AoC website.
-```php
-$puzzle = new HistorianHysteria();
-$puzzle->test = true;
-$puzzle->solve();
+## Add a Puzzle
+Use the `new_puzzle.php` script to generate new puzzle files.
+```bash
+php new_puzzle.php --year=2024 --day=1 --title="Historian Hysteria"
+```
+
+## Run Solvers
+Use the `solve.php` script to run the solver for a given day and year.
+```bash
+php solve.php --year=2024 --day=1       
+```
+
+### Test Mode
+Use the `--test` flag to test a solver against the example inputs from the AoC website.
+```bash
+php solve.php --year=2024 --day=1 --test
 ```
 ```bash
 # output
@@ -31,13 +41,7 @@ Historian Hysteria (test)
 Part 1: 11
 Part 2: 31
 ```
-
 Like the puzzle inputs, test inputs are saved to the filesystem after the initial request to the AoC site. Test inputs are assumed to be in the largest `<code>` block on the puzzle page. This request does not use the `AOC_SESSION` environment variable.
 
 Alternately, you can manually create the files in `path/to/repo/<year>/test_inputs` and fill with the appropriate data. Filenames should look like `day_01.txt`. 
 
-## Add a Puzzle
-Use the `new_puzzle.php` script to generate new puzzle files.
-```bash
-php new_puzzle.php --year=2024 --day=1 --title="Historian Hysteria"
-```

@@ -109,6 +109,13 @@ abstract class AdventOfCode
 		return $code_contents[0];
 	}
 
+	// need getter because day is protected
+	// to prevent it from being changed
+	public function get_day(): int
+	{
+		return $this->day;
+	}
+
 	// runs solve_part_one() and, if it exists, solve_part_two()
 	public function solve(): void
 	{
@@ -127,5 +134,4 @@ abstract class AdventOfCode
 			echo 'Part 2: ' . $this->solve_part_two();
 		}
 	}
-
 }

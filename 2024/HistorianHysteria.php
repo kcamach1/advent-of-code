@@ -71,6 +71,3 @@ class HistorianHysteria extends AdventOfCode
 		return (string) $this->total_similarity_score(...$this->lists);
 	}
 }
-
-$puzzle = new HistorianHysteria();
-$puzzle->solve();

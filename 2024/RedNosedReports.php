@@ -102,6 +102,3 @@ class RedNosedReports extends AdventOfCode
 		return (string) count(array_filter($this->reports, [$this, 'is_safe_dampened']));
 	}
 }
-
-$puzzle = new RedNosedReports();
-$puzzle->solve();
