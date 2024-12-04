@@ -53,3 +53,7 @@ This repo follows the automation guidelines on the /r/adventofcode [community wi
     - `get_input()` in `AdventOfCode`
 - [x] The User-Agent header includes the url of this GitHub repo and my email address
     - `aoc_request()` in `AdventOfCode`
+
+This repo also follows the redistribution guidelines from https://adventofcode.com/about.
+- [x] Does not include puzzle text
+- [x] Does not include puzzle inputs
