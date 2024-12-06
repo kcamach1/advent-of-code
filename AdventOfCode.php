@@ -5,9 +5,9 @@ abstract class AdventOfCode
 	protected int $day;
 	protected int $year;
 	protected string $title;
-	protected bool $test = false;
+	protected bool $test;
 
-	public function __construct(bool $test)
+	public function __construct(bool $test = false)
 	{
 		$this->test = $test;
 	}
