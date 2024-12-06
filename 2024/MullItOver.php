@@ -10,12 +10,18 @@ class MullItOver extends AdventOfCode
 	protected int $day = 3;
 	protected int $year = 2024;
 	protected string $title = 'Mull It Over';
+	protected string $input;
+
+	protected function setup(): void
+	{
+		$this->input = $this->get_input();
+	}
 
 	// array of pairs of integers in mul()
 	protected function get_mul_pairs(?string $input = null): array
 	{
 		if ($input === null) {
-			$input = $this->get_input();
+			$input = $this->input;
 		}
 
 		preg_match_all('/mul\((\d*),(\d*)\)/', $input, $matches);
@@ -33,7 +39,7 @@ class MullItOver extends AdventOfCode
 	protected function get_enabled_mul_pairs(): array
 	{
 		// explicitly flag enabled at start and disabled at end to make regex easier
-		$input = 'do()' . $this->get_input() . 'don\'t()';
+		$input = 'do()' . $this->input . 'don\'t()';
 
 		// input has newlines between do() and don't(), so .* doesn't work, need [\s\S]*
 		preg_match_all('/do\(\)([\s\S]*?)don\'t\(\)/', $input, $matches);
@@ -47,7 +53,6 @@ class MullItOver extends AdventOfCode
 		}
 
 		return $pairs;
-
 	}
 
 	// $pair should be array of 2 integers

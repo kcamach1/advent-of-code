@@ -9,24 +9,16 @@ class RedNosedReports extends AdventOfCode
 	protected string $title = 'Red-Nosed Reports';
 	protected array $reports;
 
-	protected function get_reports(): array
+	protected function setup(): void
 	{
-		if (isset($this->reports)) {
-			return $this->reports;
-		}
-
-		$puzzle_input = $this->get_input();
-
 		// turn puzzle input into array of strings like "8 11 13 14 15 18 17"
-		$inputs = explode(PHP_EOL, trim($puzzle_input));
+		$inputs = explode(PHP_EOL, trim($this->get_input()));
 
 		// split each string into array of integers
 		$this->reports = array_map(function (string $input) {
 			$array = explode(' ', $input);
 			return array_map('intval', $array);
 		}, $inputs);
-
-		return $this->reports;
 	}
 
 	protected function is_safe(array $report): bool
@@ -92,13 +84,11 @@ class RedNosedReports extends AdventOfCode
 
 	protected function solve_part_one(): string
 	{
-		$this->get_reports();
 		return (string) count(array_filter($this->reports, [$this, 'is_safe']));
 	}
 
 	protected function solve_part_two(): string
 	{
-		$this->get_reports();
 		return (string) count(array_filter($this->reports, [$this, 'is_safe_dampened']));
 	}
 }

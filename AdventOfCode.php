@@ -5,9 +5,16 @@ abstract class AdventOfCode
 	protected int $day;
 	protected int $year;
 	protected string $title;
-	public bool $test = false;
+	protected bool $test = false;
 
+	public function __construct(bool $test)
+	{
+		$this->test = $test;
+	}
+
+	abstract protected function setup(): void;
 	abstract protected function solve_part_one(): string;
+	// solve_part_two() is optional
 
 	// get input from file or website
 	protected function get_input(): string
@@ -149,6 +156,8 @@ abstract class AdventOfCode
 		}
 
 		echo PHP_EOL;
+
+		$this->setup();
 
 		echo 'Part 1: ' . $this->solve_part_one();
 

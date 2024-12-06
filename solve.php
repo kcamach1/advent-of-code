@@ -74,8 +74,8 @@ $class_names = array_filter(get_declared_classes(), function (string $class) {
 });
 
 // turn strings into classes
-$classes = array_map(function(string $class) {
-	return (new $class());
+$classes = array_map(function(string $class) use ($test) {
+	return (new $class($test));
 }, $class_names);
 
 $days = array_map(function (AdventOfCode $class) {
@@ -117,9 +117,6 @@ if ($actual_year !== $year_int) {
 	die;
 }
 
-if ($test) {
-	$puzzle->test = true;
-}
 $puzzle->solve();
 
 

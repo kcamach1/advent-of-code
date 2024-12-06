@@ -11,6 +11,14 @@ class CeresSearch extends AdventOfCode
 	protected int $num_columns;
 	protected int $num_rows;
 
+	protected function setup(): void
+	{
+		// array of strings (each string is a row)
+		$this->rows = explode(PHP_EOL, trim($this->get_input()));
+		$this->num_columns = strlen($this->rows[0]);
+		$this->num_rows = count($this->rows);
+	}
+
 	protected function has_xmas($row, $column, $x_direction, $y_direction): bool
 	{
 		// avoid array key errors
@@ -75,10 +83,6 @@ class CeresSearch extends AdventOfCode
 
 	protected function solve_part_one(): string
 	{
-		// array of strings (each string is a row)
-		$this->rows = explode(PHP_EOL, trim($this->get_input()));
-		$this->num_columns = strlen($this->rows[0]);
-		$this->num_rows = count($this->rows);
 		$total = 0;
 
 		for ($row = 0; $row < $this->num_rows; $row++) {

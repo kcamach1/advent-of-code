@@ -9,12 +9,8 @@ class HistorianHysteria extends AdventOfCode
 	protected string $title = 'Historian Hysteria';
 	protected array $lists = [];
 
-	protected function get_lists(): array
+	protected function setup(): void
 	{
-		if (!empty($this->lists)) {
-			return $this->lists;
-		}
-
 		$puzzle_input = $this->get_input();
 
 		// turn puzzle input into array of strings like "84283   63343"
@@ -27,8 +23,6 @@ class HistorianHysteria extends AdventOfCode
 			$this->lists[0][] = (int) $pair[0];
 			$this->lists[1][] = (int) $pair[1];
 		}
-
-		return $this->lists;
 	}
 
 	protected function total_distance(array $list_one, array $list_two): int
@@ -61,13 +55,11 @@ class HistorianHysteria extends AdventOfCode
 
 	protected function solve_part_one(): string
 	{
-		$this->get_lists();
 		return (string) $this->total_distance(...$this->lists);
 	}
 
 	protected function solve_part_two(): string
 	{
-		$this->get_lists();
 		return (string) $this->total_similarity_score(...$this->lists);
 	}
 }
