@@ -47,7 +47,8 @@ abstract class AdventOfCode
 		// session required for puzzle inputs
 		$session = getenv('AOC_SESSION');
 		if (!$session) {
-			throw new Exception('AOC_SESSION environment variable not found.');
+			echo 'AOC_SESSION environment variable not found.';
+			die;
 		}
 
 		$url = 'https://adventofcode.com/' . $this->year . '/day/' . $this->day . '/input';
